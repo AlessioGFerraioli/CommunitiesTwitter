@@ -1,0 +1,47 @@
+ Il dataset che abbiamo è una tabella in cui in ogni riga c’è un singolo tweet (o retweet).
+
+
+Le colonne sono:
+
+Created_at: data di creazione del tweet
+Id: codice identificativo unico di quel tweet/retweet
+Text: contenuto testuale del messaggio. Se
+User.id: codice identificativo dell’utente che scrive il tweet / condivide il retweet
+User.screen_name: nome utente, ma non usatelo, potrebbe cambiare nel tempo
+Place: informazioni sul luogo dell’utente (spesso missing)
+Url: Url contenuti nel tweet
+Retweeted_status.id: se si tratta di un retweet, questo è l’id del tweet originale condiviso.
+			 Altrimenti è mancante
+Retweeted_user.id: se si tratta di un retweet, questo è l’id dell’utente originale condiviso.
+			 Altrimenti è mancante
+Retweeted_user.id: se si tratta di un retweet, questi sono gli url contenuti nel tweet originale condiviso.
+			 Altrimenti è mancante
+Annotation: classe di polarità del tweet (AntiVax,Neutral,Provax) per i 6508 tweet annotati.
+			 Altrimenti mancante. Queste annotazioni sono state fatte “a mano”
+			 leggendo i messaggi.
+User_annotation: classe di polarità dell’utente che scrive il tweet o posta il retweet,
+			 disponibile solo per gli utenti con i tweet annotati.
+ 
+
+
+
+Divido in 3 step cosa potreste fare:
+
+Costruire un network diretto e pesato con link da utente A a utente B quando A retwitta 
+un messaggio di B. Quindi per fare questo vi bastano le colonne “user.id”
+e “retweeted_user.id”. Potete anche provare a tenere tutti i link con
+peso >=2 per togliere un po’ di rumore.
+
+Potreste trovare le comunità nel network con dei metodi di community detection.
+Sarebbe interessante confrontare la sovrapposizione tra le comunità e le
+“user_annotation”, ovvero vedere fino a che punto chi fosse ProVax o AntiVax
+appartenesse a comunità diverse trovate spontaneamente nel network
+(matrici di confusione ad esempio).
+
+Calcolare le misure di centralità dei nodi (o di un sottoinsieme se ci vuole troppo)
+e vedere se le distribuzioni di tali misure nelle diverse comunità
+(network communities  + 3 gruppi di utenti annotati) sono differenti.
+Magari anche non solo le solite misure a network (degree, betweenness,
+clustering coefficient), ma anche cose che vi vengono in mente usando gli altri attributi.
+Ad esempio: “numero di tweet scritti alla settimana”, “numero di url condivisi”..
+ o quello che pensate possa distinguere le diverse classi.

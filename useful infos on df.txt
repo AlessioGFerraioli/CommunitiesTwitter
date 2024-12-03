@@ -1,0 +1,82 @@
+total number of tweets (= rows of the database):
+2'067'483
+
+number of tweets that retweeted another tweet:
+1'215'464
+
+number of edges in the complete graph (any non-zero weight)
+795'411 
+
+number of nodes in the complete graph (any non-zero weight)
+???
+
+number of edges in the denoised graph (only weight >= 2)
+150'064
+
+number of nodes in the denoised graph (only weight >= 2)
+150'210
+
+number of annotated tweets
+6508
+
+number of annotated tweets that retweeted another tweet:
+0
+
+number of tweets with annotated user
+387'887
+
+number of tweets with annotated user that retweeted another tweet:
+151'508
+
+number of unique annotated users that retweeted another tweet:
+1'986
+
+number of unique users that have been retweeted by annotated users:
+10'326
+
+number of unique users which are "annotated user that retweeted another tweet" or "users that have been retweeted by annotated user" 
+(i.e. : this should be total number of nodes of the dataframe)
+10'485
+
+G_user_annotation :	    Weighted directed network with users as nodes; 
+				there is an edge from node A to node B if user A retweeted
+				user B. Weight of the edge is how many times A retweeted B.
+				All edges (any weight) are kept
+			
+				number of nodes: 10'485
+				number of edges: 75'882
+
+
+
+G_user_annotation_denoise :  Weighted directed network with users as nodes; 
+				there is an edge from node A to node B if user A retweeted
+				user B. Weight of the edge is how many times A retweeted B.
+				All edges of weight<2 have been discarded.
+			
+				number of nodes: 3'549
+				number of edges: 20'798
+
+
+----------------------------------------------------------
+
+
+
+number of tweets with ProVax annotation and AntiVax user annotation:
+5
+
+number of tweets with ProVax annotation and AntiVax user annotation:
+19
+
+count of tweets grouped by user_annotation:
+user_annotation
+tweets with AntiVax user_annotation    151504
+tweets with Neutral user_annotation   186280
+tweets with ProVax user_annotation     50103
+
+count of tweets grouped by annotation:
+user_annotation
+tweets with AntiVax user_annotation    1570
+tweets with Neutral user_annotation   3986
+tweets with ProVax user_annotation     952
+
+

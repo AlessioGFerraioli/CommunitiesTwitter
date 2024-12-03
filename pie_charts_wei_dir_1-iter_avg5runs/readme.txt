@@ -1,0 +1,4 @@
+WEIGHTED = True
+DIRECTED = True
+n_iterations = 1
+AVERAGED ON 5 RUNS
