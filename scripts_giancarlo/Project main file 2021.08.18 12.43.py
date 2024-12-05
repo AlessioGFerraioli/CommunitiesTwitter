@@ -25,7 +25,7 @@ export_annot_xlsx = False        #If True, the dataframe containing the informat
 #Reading the dataset - it takes some time
 
 #We will use the following path to read the data
-datafolder_path = r""
+datafolder_path = r"D:\Users\aless\Desktop\Universita\Complex_Networks_Remondini\Twitter_proj"
 datafile = datafolder_path + r"\df_annotated_2021-01-26.pkl"
 
 #In case we want to export the full data frame

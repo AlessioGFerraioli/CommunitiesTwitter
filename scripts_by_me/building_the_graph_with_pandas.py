@@ -6,7 +6,7 @@ Created on Mon Oct 25 00:32:16 2021
 building the graph.
 the simple and clean way with pandas (actually pandas is useful to neatly preprocess 
                                       the dataframe before creating the graph)
-
+i hate myself
 
     ██████                        ██████    
   ██████████  ████████████████  ██████████  
@@ -34,6 +34,10 @@ the simple and clean way with pandas (actually pandas is useful to neatly prepro
                     ▒▒▒▒                    
 
 
+took "inspiration" from this
+
+https://stackoverflow.com/questions/56455555/adding-weights-to-edges-in-networkx-automatically-depending-of-the-number-of-con
+
 
 
 @author: ALESSIO
@@ -47,7 +51,7 @@ import networkx as nx
 #%% Reading the dataset - it takes some time
 
 #We will use the following path to read the data
-datafolder_path = r""
+datafolder_path = r"D:\Users\aless\Desktop\Universita\Complex_Networks_Remondini\Twitter_proj"
 datafile = datafolder_path + r"\df_annotated_2021-01-26.pkl"
 
 #We read the datafile and make a dataframe
@@ -131,8 +135,8 @@ df_annotated_users.to_csv(r'D:\Users\aless\Desktop\Universita\Complex_Networks_R
 df_annotated_users.reset_index(drop=False, inplace=True)
 # if drop=False it saves in a column the old indices; inplace=True modifies the dataframe instead of creating a new one
 
-# let's say I want to select (locate) all the tweets that contain in the text the string "shrek", i can use:
-df.loc[df["text"].str.contains("shrek")]
+# let's say I want to select (locate) all the tweets that contain in the text the string "porco dio", i can use:
+df.loc[df["text"].str.contains("porco dio")]
 
 # if i want to specify some more complicated conditions on strings i can use regular expressions:
 import re
