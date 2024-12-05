@@ -1,5 +1,5 @@
 # CommunitiesTwitter
-![ProVax/NoVax Communities on Twitter]('header.jpg')
+![ProVax/NoVax Communities on Twitter](https://github.com/AlessioGFerraioli/CommunitiesTwitter/blob/main/header.jpg?raw=true)
 
 ### Network and Communities analysis of Twitter users discussing Covid-19 vaccines in Italy.
 
