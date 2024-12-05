@@ -37,7 +37,7 @@ visualize_communities_2 = False
 
 if preprocess == True:
     #We will use the following path to read the data
-    datafolder_path = r"D:\Users\aless\Desktop\Universita\Complex_Networks_Remondini\Twitter_proj"
+    datafolder_path = r""
     datafile = datafolder_path + r"\df_annotated_2021-01-26.pkl"
     
     #We read the datafile and make a dataframe
