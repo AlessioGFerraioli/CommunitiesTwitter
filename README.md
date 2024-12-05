@@ -1,4 +1,5 @@
 # CommunitiesTwitter
+![ProVax/NoVax Communities on Twitter]('header.jpg')
 
 ### Network and Communities analysis of Twitter users discussing Covid-19 vaccines in Italy.
 
