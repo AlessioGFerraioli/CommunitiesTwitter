@@ -21,6 +21,8 @@ The folder ```plots``` contains several visualizations of the data, including:
 - ```\tweets_lenght```: visualizaions of the __number of characters__ in the tweets by users of the three groups
 - ```\tweets_per_day```: visualizaions of the __number of tweets per day__ by the users of the three groups.
 
+The file ```graph_stats.txt``` contains numerical information about the graphs (for example, the number of nodes and edges, number of tweets for each class..)
+
 
 ### The analysis
 
