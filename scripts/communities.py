@@ -1,6 +1,12 @@
 # Necessary imports
 import pandas as pd
 import networkx as nx
+import matplotlib.pyplot as plt
+import igraph as ig
+import leidenalg as la
+from datetime import datetime
+from collections import defaultdict
+
 
 # Configurations dictionary for global settings
 CONFIG = {
@@ -12,7 +18,10 @@ CONFIG = {
     "remove_non_annotated": True,
     "save_processed": False,
     "read_processed": True,
-    "output_graph_path": r"D:\\Users\\aless\\Desktop\\output_graph.png"
+    "output_graph_path": r"D:\\Users\\aless\\Desktop\\output_graph.png",
+    "use_louvain": False,  # Set to True for Louvain community detection
+    "directed": True,
+    "weighted": True
 }
 
 # Step 1: Preprocessing
@@ -96,7 +105,96 @@ def group_data(df):
         print(f"{key}: {len(group)} rows.")
     return groups
 
-# Step 4: Main Execution
+
+# Step 4: Community Detection
+def detect_communities(graph, use_louvain=False, directed=True, weighted=True):
+    """
+    Detect communities using Leiden or Louvain algorithm.
+
+    Args:
+        graph (networkx.Graph): Input graph.
+        use_louvain (bool): If True, use Louvain algorithm. If False, use Leiden.
+        directed (bool): If True, consider the graph as directed.
+        weighted (bool): If True, consider edge weights.
+
+    Returns:
+        dict: Dictionary mapping node to community ID.
+    """
+    print("Converting NetworkX graph to iGraph format...")
+    ig_graph = ig.Graph.from_networkx(graph)
+
+    if not directed:
+        ig_graph = ig_graph.as_undirected()
+
+    weights = ig_graph.es["weight"] if weighted and "weight" in ig_graph.es.attributes() else None
+
+    print(f"Running {'Louvain' if use_louvain else 'Leiden'} algorithm...")
+    if use_louvain:
+        partition = ig_graph.community_multilevel(weights=weights)
+    else:
+        partition = la.find_partition(ig_graph, la.RBConfigurationVertexPartition, weights=weights)
+
+    # Map nodes to community IDs
+    node_to_community = {node.index: community for community, nodes in enumerate(partition) for node in nodes}
+    print("Community detection completed.")
+    return node_to_community
+
+
+# Step 5: Group Analysis
+def analyze_communities(graph, node_to_community):
+    """
+    Analyze the detected communities for size and centrality.
+
+    Args:
+        graph (networkx.Graph): Input graph.
+        node_to_community (dict): Mapping of nodes to community IDs.
+
+    Returns:
+        dict: Analysis results for each community.
+    """
+    print("Analyzing communities...")
+    community_analysis = defaultdict(lambda: {"size": 0, "nodes": []})
+
+    for node, community in node_to_community.items():
+        community_analysis[community]["size"] += 1
+        community_analysis[community]["nodes"].append(node)
+
+    for community, info in community_analysis.items():
+        subgraph = graph.subgraph(info["nodes"])
+        info["degree_centrality"] = nx.degree_centrality(subgraph)
+
+    print("Community analysis completed.")
+    return community_analysis
+
+
+# Step 6: Visualization
+def visualize_communities(graph, node_to_community, output_file=None):
+    """
+    Visualize the graph with nodes colored by community.
+
+    Args:
+        graph (networkx.Graph): Input graph.
+        node_to_community (dict): Mapping of nodes to community IDs.
+        output_file (str): Path to save the visualization. If None, display interactively.
+    """
+    print("Visualizing communities...")
+    pos = nx.spring_layout(graph)
+    communities = set(node_to_community.values())
+
+    plt.figure(figsize=(10, 8))
+    for community in communities:
+        nodes = [node for node, comm in node_to_community.items() if comm == community]
+        nx.draw_networkx_nodes(graph, pos, nodelist=nodes, label=f"Community {community}")
+
+    nx.draw_networkx_edges(graph, pos, alpha=0.3)
+    plt.legend()
+
+    if output_file:
+        plt.savefig(output_file)
+        print(f"Community visualization saved to {output_file}.")
+    else:
+        plt.show()
+
 def main():
     # load the data (if necessary, pre-process it)
     if CONFIG["read_processed"]:
@@ -110,7 +208,37 @@ def main():
     # i create the networkx graph from the dataframe
     G = create_graph(df)
     
-    # Placeholder for subsequent analysis and visualization steps.
-    print("Preprocessing and graph creation complete. Ready for analysis and visualization.")
+    print("Preprocessing and graph creation complete.")
+
+    
+    # Detect communities
+    print("Starting Community detection..")
+    node_to_community = detect_communities(G, use_louvain=CONFIG["use_louvain"], directed=CONFIG["directed"], weighted=CONFIG["weighted"])
+    print("Community detection completed.")
+
+    # Analyze communities
+    community_analysis = analyze_communities(G, node_to_community)
+    print(community_analysis)
+
+    # Visualize communities
+    filename = "communities.png"
+    visualize_communities(G, node_to_community, output_file=filename)
+    print(f"Community visualization saved to {filename}.") 
+
 
 main()  # Execute the refactored main function.
+
+
+
+
+# Integration Example
+def main_with_community_analysis():
+    # Load and preprocess the data (placeholder call)
+    G = nx.DiGraph()
+
+    # Example: Add edges (this should be replaced with actual data loading)
+    G.add_weighted_edges_from([(1, 2, 0.5), (2, 3, 0.8), (3, 4, 1.2), (4, 1, 0.4)])
+
+
+if __name__ == "__main__":
+    main_with_community_analysis()
