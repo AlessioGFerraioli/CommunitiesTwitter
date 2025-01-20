@@ -553,7 +553,7 @@ def find_alpha(degree_centr, min_deg):
     alpha = 1 + n/summation
     
     if check != n:
-        print("wutathefakuru")
+        print("WTF")
     return alpha
 
 

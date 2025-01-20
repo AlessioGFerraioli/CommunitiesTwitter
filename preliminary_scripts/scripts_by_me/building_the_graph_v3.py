@@ -10,8 +10,6 @@ building the graph v3 (major breakthrouhg)
 
 #%%              OPEN THE DATAFRAME FROM FILE
 
-#cd D:\Users\aless\Desktop\Universita\Complex_Networks_Remondini\Twitter_proj
-
 import pickle
 with open('df_annotated_2021-01-26.pkl','rb') as f:
     df=pickle.load(f)
